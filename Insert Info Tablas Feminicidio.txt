@@ -1,0 +1,129 @@
+--Inserción de información en las tablas para la parte A 
+--Base de datos sobre Feminicidios
+--Aranza Ibarra Camarena y Lars Daniel Johansson Niño
+
+
+--Tuplas Casos (1)
+insert into casos_juri(folio, apertura, finalizacion, responsable, inst_gob)
+values(101,2004,2017,'Marcos Moreno','FGJMEX') ;
+
+insert into casos_juri(folio, apertura, finalizacion, responsable, inst_gob)
+values(102,2009,2010, 'Tribunal Oral de Chihuahua','FGJCHIH');
+
+insert into casos_juri(folio, apertura, finalizacion, responsable, inst_gob)
+values(103,2020,2022,'Fiscalía de Seguridad','SSC') ;
+
+insert into casos_juri(folio, apertura, finalizacion, responsable, inst_gob)
+values(104,2023, null, null, 'FGJP');
+
+insert into casos_juri(folio, apertura, finalizacion, responsable, inst_gob)
+values(105,2017,2019,'Jorge Luis Reyes Franco','FGJCM');
+
+insert into casos_juri(folio, apertura, finalizacion, responsable, inst_gob)
+values(106,2019, 2020,'Mosco González','FGJCM' ) ;
+
+insert into casos_juri(folio, apertura, finalizacion, responsable, inst_gob)
+values(107, 2020,null,'Omar García','FGJCM');
+
+
+
+--Tuplas Leyes Logradas (3)
+insert into leyes_log values('1L','Ley de Delito de Feminicidio',	2012,	'Julia Mantilla');
+
+insert into leyes_log values('2L','Ley Ingrid', 2023, 'Nelly Montealegre');
+insert into leyes_log values('3L', 'Ley Monzón',2023, 'Mónica Rodríguez');
+insert into leyes_log values('4L', 'Ley Matilde', 2023,	'Lila Aguilar Gil');
+insert into leyes_log values('5L', 'Ley General de Feminicidio', 2022,	'Marisela Escobedo');
+
+--Tuplas homicidas (4)
+insert into homicidas values('AS1','Bernardo', 'López Gutiérrez', 'M', 42);
+
+insert into homicidas values('AS2', 'Sergio', 'Barraza Bocanegra', 'M', 50);
+
+insert into homicidas values('AS3', 'Francisco', 	'Robledo', 'M',	70);
+insert into homicidas values('AS4', 'Jorge Luis', 'Hernández González',	'M',52);
+
+insert into homicidas values('AS5', 'Juan Carlos', 'García', 'M', 0);
+
+insert into homicidas values('AS6','Mario Alberto', 'Reyes Nájera', 'M',	60);
+
+insert into homicidas values('AS7', 'Javier', 'López Zavala', 'M', 0);
+
+--Tupla Estado (5)
+insert into estado values('EDOMEX', 16992418);
+insert into estado values('CHIH', 925762);
+insert into estado values('PL',	6168883);
+insert into estado values('CDMX',9209944);
+insert into estado values('DG', 1832650);
+insert into estado values('HG',	3082841);
+insert into estado values('COL',731391);
+insert into estado values('JAL', 8348151);
+insert into estado values('VER', 8062579);
+
+
+--Tupla Instituciones (6)
+Insert into inst values('CEMBS', 'Consejo Estatal de la Mujer y Bienestar Social', 017722138915, 2000, 'EDOMEX');
+
+Insert into inst values('ICM',	'Instituto Chihuahuense de las Mujeres', 6144293505, 2003, 'CHIH');
+
+Insert into inst values('IPM',	'Instituto Poblado de las Mujeres', 018006242330, 2001, 'PL');
+
+Insert into inst values('IMCDMX', 'Instituto de las Mujeres de la Ciudad de México', 5555122836, 1998, 'CDMX');
+
+Insert into inst values('IEM',	'Instituto Estatal de las Mujeres', 6181374600, 2000, 'DG');
+
+Insert into inst values('IHM',	'Instituto Hidalguense de las mujeres',	017717181550, 2005, 'HG');
+
+--Tupla crimenes (7)
+ Insert into crimenes values('RBD', 'Robo bienes o dinero');
+Insert into crimenes values('EXT', 'Extorsión');
+Insert into crimenes values('FRA', 'Fraude');
+Insert into crimenes values('RV','Robo vehículo');
+ Insert into crimenes values('DM', 'Daños a Maquinaria');
+Insert into crimenes values('DINFOR', 'Delitos Informáticos');
+Insert into crimenes values('SEC', 'Secuestros');
+Insert into crimenes values('AMVB','Amenazas Verbales');
+Insert into crimenes values('OTROS', 'otros');
+
+--Tuplas Victimas(2)
+
+insert into victimas values('NAM-1','Nadia', 'Muciño',24,'12-02-2004', '1L',  101, 'EDOMEX');
+
+insert into victimas values('RMFA-1','Rubí Marisol','Frayre Escobedo',16,'29-01-2009', '5L',  102,'CHIH');
+
+insert into victimas values('IE-1','Ingrid', 'Escamilla', 25, '09-02-2020', '2L',  103, 'CDMX');
+
+insert into victimas values('LBRO-1','Lesby Berlín', 'Rivera Osorio',22,'3-05-2017','4L',  104,	'CDMX');
+
+insert into victimas values('APS-1','Abril Pérez', 'Sagaón', 46, '25-11-2019', null, 105, 'CDMX');
+
+insert into victimas values('FCAA-1','Fátima Cecilia', 'Aldrighett Antón', 7, '11-02-2020', null,  106, 'CDMX');
+
+insert into victimas values('CMP-1','Cecilia', 'Monzón',37, '21-05-2022', '3L',  107, 'PL');
+ 
+--Tuplas para homi_por (8)
+Insert into homi_por values('NAM-1','AS1','Conyugal');
+Insert into homi_por values('RMFA-1','AS2','Pareja');
+Insert into homi_por values('IE-1','AS3','Pareja');
+Insert into homi_por values('LBRO-1','AS4','Pareja');
+Insert into homi_por values('APS-1','AS5','Conyugal');
+Insert into homi_por values('FCAA-1','AS6','Conocido');
+Insert into homi_por values('CMP-1','AS7','Expareja');
+
+--Tuplas para  fueIns (9)
+Insert into fueIns values('NAM-1','CEMBS');
+Insert into fueIns values('RMFA-1','ICM');
+Insert into fueIns values('IE-1','IMCDMX');
+Insert into fueIns values('LBRO-1','IMCDMX');
+Insert into fueIns values('APS-1','IMCDMX');
+Insert into fueIns values('FCAA-1','IMCDMX');
+Insert into fueIns values('CMP-1','IPM');
+
+--Tuplas para  regis_cri (10)
+Insert into regis_cri values('EDOMEX', 'RBD', 346579, 2013);
+Insert into regis_cri values('HG', 'EXT', 287105, 2014);
+Insert into regis_cri values ('CDMX', 'FRA', 156756, 2021);
+Insert into regis_cri values('VER', 'SEC', 23520, 2020);
+Insert into regis_cri values('COL', 'AMVB', 24894, 2014);
+Insert into regis_cri values('JAL', 'RV', 115346, 2012);
+Insert into regis_cri values('CHIH', 'DM', 43269, 2019);

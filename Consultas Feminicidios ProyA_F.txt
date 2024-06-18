@@ -1,0 +1,106 @@
+--Consultas de la parte A del proyecto.  
+--Base de datos sobre Feminicidios
+--Aranza Ibarra Camarena y Lars Daniel Johansson Niño
+--Tanto el texto que describe la consulta como los requerimientos para la misma están en las consultas
+
+--a) Una que involucre varias tablas y order by
+
+Imprima los nombres y apellidos de aquelas víctimas que son mayores de edad y que murieron en la CDMX. Ordene de manera que se muestre al final la víctima más joven y al principio la que más años tenía. 
+
+select nombre_v ||' '|| apellidos_v, edad_muerte
+from victimas v, estado e
+where edad_muerte>18 and e.idE='CDMX' and v.idE=e.idE
+order by edad_muerte desc;
+
+--b) Una con manejo de fechas B
+Imprima los nombres y apellidos de aquellas víctimas cuya muerte sucediera en un lapso no mayor a 5 años respecto al año que más se registraron víctimas del crimen más grave de su estado. De igual forma imprima la fecha y el año con mayor victimas en su estado.  Ordene por fechas
+
+select nombre_v ||' '|| apellidos_v, v.fecha, c.año_mayor_vic
+from victimas v, estado e, regis_cri c
+where extract(year from v.fecha) between (c.año_mayor_vic)-5 and c.año_mayor_vic and v.idE=e.idE and 
+e.idE=c.idE ;
+
+--c) Una con not in y subconsulta B
+Regrese el nombre de la victima, el folio de su caso y las siglas del estado donde sucedió el caso si su estado comienza con una letra a partir de D. Se deberá mostrar la institución gubernamental a la cual puso asistir dicha mujer en su estado. Deberá utilizar una subconsulta para esto. 
+
+
+select j.folio, v.nombre_v, e.idE, i.nombre_i
+from casos_juri j, victimas v, estado e, inst i
+where j.folio=v.folio and v.idE=e.idE and 
+i.idE=e.idE and
+e.idE not in (select idE 
+				from estado 
+				where idE<'D');
+
+--d) Una con intersección
+
+Regrese el nombre completo de los homicidas y sus condenas de aquellos que si las recibieron y, ademas, tenían una relación Conyugal con la victima
+
+select nombre_hom||' '||apellidos_hom, condena
+from homicidas 
+where condena>0
+
+intersect
+
+select nombre_hom||' '||apellidos_hom, condena
+from homicidas h, homi_por p
+where relacion='Conyugal' and h.idh=p.idh;
+
+
+--e) Una con unión B
+Regresa el nombre del crimen, el año con mayor victimas así como la cantidad de víctimas para crimenes cuyo nombre sea mayor a F o las siglas de su estado sea mayor a F
+
+select nombre_cri, m.año_mayor_vic, m.cant_vic_anual
+from crimenes c, regis_cri m
+where c.idc=m.idc and nombre_cri>'F'
+
+union 
+
+select nombre_cri, m.año_mayor_vic, m.cant_vic_anual
+from crimenes c, regis_cri m, estado e
+where c.idc=m.idc and m.idE=e.idE and e.idE>'F';
+
+--f) Una con agrupamiento
+Regrese el tipo de relación (las categorías) entre víctima y homicida junto con la cantidad de víctimas mayores de edad en cada una de estas.  
+
+select relacion, count(*)
+from homi_por h, victimas v
+where v.edad_muerte>17 and h.idv=v.idv
+group by h.relacion;
+
+
+
+--g) Una con agrupamiento y having
+De aquellos estados que tengan a lo menos dos víctimas registradas, regrese sus siglas así como la cantidad de víctimas registradas. 
+
+select e.idE, count(*)
+from estado e, victimas v
+where e.idE=v.idE
+group by e.idE 
+having count(*)>1;
+
+
+--h) Una que contenga where (con al menos una condición que no sea sólo equijunta), group by
+y having.
+
+Regrese la categoría de relación entre víctima y homicida junto con la cantidad de víctimas registradas por las categorías, únicamente de las víctimas que eran mayores de edad y si es que hubo al menos dos incidencias de la categoria. 
+
+select relacion, count(*)
+from homi_por h, victimas v
+where v.edad_muerte>17 and h.idv=v.idv
+group by h.relacion
+having count(*)>=2;
+
+--i) Una que contenga el máximo, o mínimo, de un conjunto de grupos B
+
+De aquellos estados que registraron la cantidad minima de feminicidios y que dictaron condenas positivas (condena >0), regresa sus siglas y la cantidad de condenas positivas que dieron. 
+
+select e.idE, count(condena)
+from homicidas h, estado e, homi_por p, victimas v
+where h.idh=p.idh and p.idv=v.idv and v.idE=e.idE and condena>0
+group by e.idE
+having count(*)<=all(select count(*)
+	from estado e, victimas v 
+	where e.ide = v.ide
+	group by e.ide)
+

@@ -1,0 +1,66 @@
+--Creación de tablas para la parte A 
+--Base de datos sobre Feminicidios
+--Aranza Ibarra Camarena y Lars Daniel Johansson Niño
+
+create table casos_juri
+(folio 	smallint	primary key, 
+apertura	smallint,	
+finalizacion	smallint, 
+responsable 	varchar(50),
+inst_gob	varchar(20));
+
+create table leyes_log
+(idL 	varchar(5) primary key,
+nombre_l	varchar(50) ,	
+año_l	smallint,
+activista_prin	varchar(50));
+
+create table homicidas
+(idH 	varchar(10) primary key,
+nombre_hom varchar (30),
+apellidos_hom varchar(30),
+genero 	char(1) 	check(genero in('M', 'F', 'O')),
+condena smallint);
+
+create table crimenes
+(idC varchar(20) primary key,
+nombre_cri 	varchar(50));
+
+create table estado
+(idE varchar(20) primary key, 
+poblacion bigint );
+
+create table inst
+(idI varchar(10) primary key, 
+nombre_i varchar(100), 
+telefono varchar(20), 
+apertura smallint,
+idE varchar(20) references estado);
+
+create table victimas
+(idV varchar(20) primary key,
+nombre_v 	varchar(30),
+apellidos_v	varchar(30),
+edad_muerte smallint, 
+fecha date,
+idL 	varchar(5) references leyes_log,
+folio smallint references casos_juri, 
+idE varchar(20) references estado);
+
+create table homi_por
+(idV varchar(20) references victimas, 
+idH 	varchar(10) references homicidas,
+primary key(idV, idH),
+relacion varchar(20));
+
+create table fueIns
+(idV varchar(20) references victimas, 
+idIns varchar(10) references inst,
+ primary key(idV, idIns));
+
+create table regis_cri
+(idE varchar(20) references estado, 
+idC varchar(20) references crimenes,
+primary key (idE, idC),
+cant_vic_anual 	bigint  check(cant_vic_anual>0),
+año_mayor_vic	smallint);
